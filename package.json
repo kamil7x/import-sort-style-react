@@ -1,5 +1,5 @@
 {
-  "name": "import-sort-style-react",
+  "name": "import-sort-style-react2",
   "version": "0.3.4",
   "description": "An import-sort style that groups and sorts by module respecting React modules",
   "main": "lib/index.js",
@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/teamable-software/import-sort-style-react.git"
+    "url": "git@github.com:alexander37137/import-sort-style-react.git"
   },
   "homepage": "https://github.com/teamable-software/import-sort-style-react#readme",
   "bugs": {
