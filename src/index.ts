@@ -1,4 +1,9 @@
-import { IComparatorFunction, IMatcherFunction, IStyleAPI, IStyleItem } from "import-sort-style";
+import {
+  IComparatorFunction,
+  IMatcherFunction,
+  IStyleAPI,
+  IStyleItem
+} from "import-sort-style";
 
 import { dirname } from "path";
 
@@ -17,11 +22,13 @@ export default function(styleApi: IStyleAPI, file: string): IStyleItem[] {
     isRelativeModule,
     moduleName,
     naturally,
-    unicode,
+    unicode
   } = styleApi;
 
-  const isReactModule: IMatcherFunction = (imported) => Boolean(imported.moduleName.match(/^(react|prop-types|redux)/));
-  const isStylesModule: IMatcherFunction = (imported) => Boolean(imported.moduleName.match(/\.s?css$/));
+  const isReactModule: IMatcherFunction = imported =>
+    Boolean(imported.moduleName.match(/^(react|prop-types|redux)/));
+  const isStylesModule: IMatcherFunction = imported =>
+    Boolean(imported.moduleName.match(/\.s?css$/));
 
   const reactComparator: IComparatorFunction = (name1, name2) => {
     let i1 = fixedOrder.indexOf(name1);
@@ -34,22 +41,38 @@ export default function(styleApi: IStyleAPI, file: string): IStyleItem[] {
   };
 
   return [
-    // import React from "react";
-    { match: isReactModule, sort: moduleName(reactComparator), sortNamedMembers: alias(unicode) },
-
-    // import … from "fs";
-    { match: isNodeModule, sort: moduleName(naturally), sortNamedMembers: alias(unicode) },
-
-    // import uniq from 'lodash/uniq';
-    {match: isInstalledModule(dirname(file)), sort: moduleName(naturally), sortNamedMembers: alias(unicode)},
-    {separator: true},
-    //
-    // import Component from "components/Component.jsx";
-    { match: isAbsoluteModule, sort: moduleName(naturally), sortNamedMembers: alias(unicode) },
-    { separator: true },
-
     // import "foo"
     { match: and(hasNoMember, isAbsoluteModule) },
+    { separator: true },
+
+    // import React from "react";
+    {
+      match: isReactModule,
+      sort: moduleName(reactComparator),
+      sortNamedMembers: alias(unicode)
+    },
+
+    // import … from "fs";
+    {
+      match: isNodeModule,
+      sort: moduleName(naturally),
+      sortNamedMembers: alias(unicode)
+    },
+
+    // import uniq from 'lodash/uniq';
+    {
+      match: isInstalledModule(dirname(file)),
+      sort: moduleName(naturally),
+      sortNamedMembers: alias(unicode)
+    },
+    { separator: true },
+    //
+    // import Component from "components/Component.jsx";
+    {
+      match: isAbsoluteModule,
+      sort: moduleName(naturally),
+      sortNamedMembers: alias(unicode)
+    },
     { separator: true },
 
     // import "./foo"
@@ -61,12 +84,16 @@ export default function(styleApi: IStyleAPI, file: string): IStyleItem[] {
     {
       match: and(isRelativeModule, not(isStylesModule)),
       sort: [dotSegmentCount, moduleName(naturally)],
-      sortNamedMembers: alias(unicode),
+      sortNamedMembers: alias(unicode)
     },
     { separator: true },
 
     // import styles from "./Components.scss";
-    { match: isStylesModule, sort: [dotSegmentCount, moduleName(naturally)], sortNamedMembers: alias(unicode) },
-    { separator: true },
+    {
+      match: isStylesModule,
+      sort: [dotSegmentCount, moduleName(naturally)],
+      sortNamedMembers: alias(unicode)
+    },
+    { separator: true }
   ];
 }
