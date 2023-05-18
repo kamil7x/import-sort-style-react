@@ -1,5 +1,5 @@
 {
-  "name": "@kamil7x/import-sort-style-react",
+  "name": "import-sort-style-react-new",
   "version": "0.1.0",
   "description": "An import-sort style that groups and sorts by module respecting React modules",
   "main": "lib/index.js",
