@@ -55,6 +55,7 @@ export default function(styleApi: IStyleAPI, file: string): IStyleItem[] {
       sort: moduleName(reactComparator),
       sortNamedMembers: alias(unicode),
     },
+    { separator: true },
 
     // import … from "fs";
     {
@@ -62,6 +63,7 @@ export default function(styleApi: IStyleAPI, file: string): IStyleItem[] {
       sort: moduleName(naturally),
       sortNamedMembers: alias(unicode),
     },
+    { separator: true },
 
     // import uniq from 'lodash/uniq';
     {
