@@ -45,6 +45,10 @@ export default function(styleApi: IStyleAPI, file: string): IStyleItem[] {
     { match: and(hasNoMember, isAbsoluteModule) },
     { separator: true },
 
+    // import "./foo"
+    { match: and(hasNoMember, isRelativeModule, not(isStylesModule)) },
+    { separator: true },
+
     // import React from "react";
     {
       match: isReactModule,
@@ -66,17 +70,13 @@ export default function(styleApi: IStyleAPI, file: string): IStyleItem[] {
       sortNamedMembers: alias(unicode)
     },
     { separator: true },
-    //
+
     // import Component from "components/Component.jsx";
     {
       match: isAbsoluteModule,
       sort: moduleName(naturally),
       sortNamedMembers: alias(unicode)
     },
-    { separator: true },
-
-    // import "./foo"
-    { match: and(hasNoMember, isRelativeModule) },
     { separator: true },
 
     // import … from "./foo";
@@ -87,6 +87,9 @@ export default function(styleApi: IStyleAPI, file: string): IStyleItem[] {
       sortNamedMembers: alias(unicode)
     },
     { separator: true },
+
+    // import "./styles.css";
+    {match: and(hasNoMember, isRelativeModule, isStylesModule)},
 
     // import styles from "./Components.scss";
     {
