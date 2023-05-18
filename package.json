@@ -9,7 +9,8 @@
     "build": "tsc -p src",
     "watch:build": "tsc -p src -w",
     "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register --recursive test",
-    "watch:test": "mocha -w --compilers ts:ts-node/register,tsx:ts-node/register --recursive test"
+    "watch:test": "mocha -w --compilers ts:ts-node/register,tsx:ts-node/register --recursive test",
+    "format": "prettier --write src/*.ts"
   },
   "author": "Michael Manukyan <michael@teamable.com> (https://github.com/mike1808)",
   "license": "MIT",
@@ -29,6 +30,7 @@
     "import-sort-parser": "^4.2.0",
     "import-sort-style": "^4.2.0",
     "mocha": "^3.4.2",
+    "prettier": "^1.15.3",
     "ts-node": "^3.3.0",
     "tslint": "^5.4.3",
     "typescript": "^2.6.1"

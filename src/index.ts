@@ -2,12 +2,12 @@ import {
   IComparatorFunction,
   IMatcherFunction,
   IStyleAPI,
-  IStyleItem
-} from "import-sort-style";
+  IStyleItem,
+} from 'import-sort-style';
 
-import { dirname } from "path";
+import { dirname } from 'path';
 
-const fixedOrder = ["react", "prop-types"];
+const fixedOrder = ['react', 'prop-types'];
 
 export default function(styleApi: IStyleAPI, file: string): IStyleItem[] {
   const {
@@ -22,7 +22,7 @@ export default function(styleApi: IStyleAPI, file: string): IStyleItem[] {
     isRelativeModule,
     moduleName,
     naturally,
-    unicode
+    unicode,
   } = styleApi;
 
   const isReactModule: IMatcherFunction = imported =>
@@ -53,21 +53,21 @@ export default function(styleApi: IStyleAPI, file: string): IStyleItem[] {
     {
       match: isReactModule,
       sort: moduleName(reactComparator),
-      sortNamedMembers: alias(unicode)
+      sortNamedMembers: alias(unicode),
     },
 
     // import … from "fs";
     {
       match: isNodeModule,
       sort: moduleName(naturally),
-      sortNamedMembers: alias(unicode)
+      sortNamedMembers: alias(unicode),
     },
 
     // import uniq from 'lodash/uniq';
     {
       match: isInstalledModule(dirname(file)),
       sort: moduleName(naturally),
-      sortNamedMembers: alias(unicode)
+      sortNamedMembers: alias(unicode),
     },
     { separator: true },
 
@@ -75,7 +75,7 @@ export default function(styleApi: IStyleAPI, file: string): IStyleItem[] {
     {
       match: isAbsoluteModule,
       sort: moduleName(naturally),
-      sortNamedMembers: alias(unicode)
+      sortNamedMembers: alias(unicode),
     },
     { separator: true },
 
@@ -84,19 +84,19 @@ export default function(styleApi: IStyleAPI, file: string): IStyleItem[] {
     {
       match: and(isRelativeModule, not(isStylesModule)),
       sort: [dotSegmentCount, moduleName(naturally)],
-      sortNamedMembers: alias(unicode)
+      sortNamedMembers: alias(unicode),
     },
     { separator: true },
 
     // import "./styles.css";
-    {match: and(hasNoMember, isRelativeModule, isStylesModule)},
+    { match: and(hasNoMember, isRelativeModule, isStylesModule) },
 
     // import styles from "./Components.scss";
     {
       match: isStylesModule,
       sort: [dotSegmentCount, moduleName(naturally)],
-      sortNamedMembers: alias(unicode)
+      sortNamedMembers: alias(unicode),
     },
-    { separator: true }
+    { separator: true },
   ];
 }
